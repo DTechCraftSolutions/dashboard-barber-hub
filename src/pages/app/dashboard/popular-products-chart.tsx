@@ -5,11 +5,11 @@ import colors from 'tailwindcss/colors'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const data = [
-  { product: 'Pepperoni', amount: 40 },
-  { product: 'Mussarela', amount: 30 },
-  { product: 'Marguerita', amount: 50 },
-  { product: '4 Queijos', amount: 16 },
-  { product: 'Frango frito', amount: 26 },
+  { product: 'Degradê', amount: 40 },
+  { product: 'Refletido', amount: 30 },
+  { product: 'Luzes', amount: 50 },
+  { product: 'Mullet', amount: 16 },
+  { product: 'Calvão', amount: 26 },
 ]
 
 const COLORS = [

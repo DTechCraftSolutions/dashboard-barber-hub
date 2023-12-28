@@ -7,6 +7,7 @@ import { Dashboard } from './pages/app/dashboard/dashboard'
 import { Orders } from './pages/app/orders/orders'
 import { SignIn } from './pages/auth/sign-in'
 import { SignUp } from './pages/auth/sign-up'
+import { RegisterProfessional } from './pages/register-professional'
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
         path: '/orders',
         element: <Orders />,
       },
+      {
+        path: '/add-professional',
+        element: <RegisterProfessional />,    
+      }
     ],
   },
   {
