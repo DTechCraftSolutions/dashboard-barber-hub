@@ -23,6 +23,9 @@ export function Header() {
           <NavLink to="/add-professional">
             Cadastre um profissional
           </NavLink>
+          <NavLink to="/avaliable">
+            Disponibilidade
+          </NavLink>
         </nav>
 
         <div className="ml-auto flex items-center gap-2">

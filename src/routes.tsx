@@ -7,7 +7,8 @@ import { Dashboard } from './pages/app/dashboard/dashboard'
 import { Orders } from './pages/app/orders/orders'
 import { SignIn } from './pages/auth/sign-in'
 import { SignUp } from './pages/auth/sign-up'
-import { RegisterProfessional } from './pages/register-professional'
+import { RegisterProfessional } from './pages/app/register-professional'
+import { AvaliableBarberShop } from './pages/app/barber-avaliable'
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,12 @@ export const router = createBrowserRouter([
       {
         path: '/add-professional',
         element: <RegisterProfessional />,    
+      },
+      {
+        path: '/avaliable',
+        element: <AvaliableBarberShop/>
       }
+      
     ],
   },
   {
