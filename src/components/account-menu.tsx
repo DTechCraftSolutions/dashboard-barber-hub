@@ -18,8 +18,7 @@ export function AccountMenu() {
           variant="outline"
           className="flex select-none items-center gap-2"
         >
-          Pizza Shop
-          <ChevronDown className="h-4 w-4" />
+          BarberHub
         </Button>
       </DropdownMenuTrigger>
 

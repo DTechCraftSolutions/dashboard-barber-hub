@@ -7,19 +7,24 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useState } from 'react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 const signUpForm = z.object({
-  restaurantName: z.string(),
+  BarberShopName: z.string(),
   managerName: z.string(),
   phone: z.string(),
   email: z.string().email(),
+  password: z.string().min(6),
+
 })
 
 type SignUpForm = z.infer<typeof signUpForm>
 
 export function SignUp() {
   const navigate = useNavigate()
-
+  const [selectedPlan, setSelectedPlan] = useState('anual');
+  const [showCards, setShowCards] = useState("");
   const {
     register,
     handleSubmit,
@@ -32,14 +37,14 @@ export function SignUp() {
 
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      toast.success('Restaurante cadastrado com sucesso!', {
+      toast.success('Barbearia cadastrada com sucesso!', {
         action: {
           label: 'Login',
           onClick: () => navigate('/sign-in'),
         },
       })
     } catch (error) {
-      toast.error('Erro ao cadastrar restaurante.')
+      toast.error('Erro ao cadastrar barbearia!')
     }
   }
 
@@ -58,7 +63,7 @@ export function SignUp() {
               Criar conta grátis
             </h1>
             <p className="text-sm text-muted-foreground">
-              Seja um parceiro e comece suas vendas!
+              Seja um parceiro e comece a gerenciar sua barbearia!
             </p>
           </div>
 
@@ -68,7 +73,7 @@ export function SignUp() {
               <Input
                 id="restaurantName"
                 type="text"
-                {...register('restaurantName')}
+                {...register('BarberShopName')}
               />
             </div>
 
@@ -90,6 +95,108 @@ export function SignUp() {
               <Label htmlFor="phone">Seu celular</Label>
               <Input id="phone" type="tel" {...register('phone')} />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Cpf</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Endereço</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Número</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Complemento</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Cidade</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Cidade</Label>
+              <Input id="phone" type="tel" {...register('phone')} />
+            </div>
+            <div>
+              <Label htmlFor="password">Senha</Label>
+              <Input
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                {...register('password')}
+              />
+            </div>
+            <div>
+              <Label htmlFor="password">Confirme sua senha</Label>
+              <Input
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                {...register('password')}
+              />
+              <Select onValueChange={(value) => setShowCards(value)}>
+                <div className='mt-2'>
+                  <label
+                    className='text-sm'
+                    htmlFor="">
+                    Plano
+                  </label>
+                  <SelectTrigger className=' h-11'>
+                    <SelectValue placeholder="Selecione..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="gratis">Testar grátis por 7 dias</SelectItem>
+                    <SelectItem value="showCards">Escolher um plano personalizado</SelectItem>
+                  </SelectContent>
+                </div>
+              </Select>
+            </div>
+            {
+              showCards === 'showCards' &&        <div className='flex w-full justify-between'>
+              <div
+                onClick={() => setSelectedPlan('trimestral')}
+                className={`w-[30%] cursor-pointer ${selectedPlan === 'trimestral' ? 'bg-[#C72323] shadow-lg shadow-[#C72323]' : ''} h-40 border rounded-sm'`}>
+                <h2 className='w-full text-center pt-2'>
+                  Trimestral
+                </h2>
+                <p className='w-full text-center font-bold'>
+                  R$79,90
+                </p>
+                <p className='text-xs text-center px-2 mt-2'>
+                  Fidelidade de 3 meses
+                </p>
+              </div>
+              <div
+                onClick={() => setSelectedPlan('semestral')}
+                className={`w-[30%]  cursor-pointer ${selectedPlan === 'semestral' ? 'bg-[#C72323] shadow-lg shadow-[#C72323]' : ''} h-40 border rounded-sm'`}>
+                <h2 className='w-full text-center pt-2'>
+                  Semestral
+                </h2>
+                <p className='w-full text-center font-bold'>
+                  R$64,90
+                </p>
+                <p className='text-xs text-center px-2 mt-2'>
+                  Fidelidade de 6 meses
+                </p>
+              </div>
+              <div
+                onClick={() => setSelectedPlan('anual')}
+                className={`w-[30%] cursor-pointer ${selectedPlan === 'anual' ? 'bg-[#C72323] shadow-lg shadow-[#C72323]' : ''} h-40 border rounded-sm'`}>
+                <h2 className='w-full text-center pt-2'>
+                  Anual
+                </h2>
+                <p className='w-full text-center font-bold'>
+                  R$49,90
+                </p>
+                <p className='text-xs text-center px-2 mt-2'>
+                  Fidelidade de 12 meses
+                </p>
+              </div>
+
+            </div> ||  null
+            }
 
             <Button disabled={isSubmitting} className="w-full" type="submit">
               Finalizar cadastro
