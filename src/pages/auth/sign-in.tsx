@@ -1,40 +1,37 @@
-import { Helmet } from 'react-helmet-async'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { toast } from 'sonner'
-import { z } from 'zod'
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { api } from "@/lib/axios";
 
 const signInForm = z.object({
   email: z.string().email(),
-})
+  password: z.string().min(6),
+});
 
-type SignInForm = z.infer<typeof signInForm>
+type SignInForm = z.infer<typeof signInForm>;
 
 export function SignIn() {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignInForm>()
+  } = useForm<SignInForm>();
 
+  const navigate = useNavigate();
   async function handleSignIn(data: SignInForm) {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      toast.success('Enviamos um link de autenticação para seu e-mail.', {
-        action: {
-          label: 'Reenviar',
-          onClick: () => {
-            handleSignIn(data)
-          },
-        },
-      })
-    } catch (error) {
-      toast.error('Credenciais inválidas.')
+      const response = await api.post("/professionals/authenticate", data);
+      localStorage.setItem("token", response.data.token);
+      toast.success("Login realizado com sucesso.", {});
+      navigate("/", { replace: true });
+    } catch (error: any) {
+      toast.error(error.message);
     }
   }
 
@@ -60,7 +57,11 @@ export function SignIn() {
           <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}>
             <div className="space-y-2">
               <Label htmlFor="email">Seu e-mail</Label>
-              <Input id="email" type="email" {...register('email')} />
+              <Input id="email" type="email" {...register("email")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Sua senha</Label>
+              <Input id="password" type="password" {...register("password")} />
             </div>
 
             <Button disabled={isSubmitting} className="w-full" type="submit">
@@ -70,5 +71,5 @@ export function SignIn() {
         </div>
       </div>
     </>
-  )
+  );
 }
